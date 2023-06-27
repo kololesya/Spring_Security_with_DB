@@ -1,13 +1,13 @@
 package com.olesya.psyCab.email;
 
-import com.olesya.psyCab.user.User;
+import com.olesya.psyCab.entity.User;
 import jakarta.mail.MessagingException;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
 
 import java.io.UnsupportedEncodingException;
 
 import static com.olesya.psyCab.email.ProjectEmailSender.emailMessage;
+
 
 @Component
 public class SendEmailMessage {

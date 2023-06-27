@@ -1,6 +1,6 @@
 package com.olesya.psyCab.registration;
 
-import com.olesya.psyCab.user.Role;
+import com.olesya.psyCab.entity.Role;
 import lombok.Data;
 
 import java.util.*;

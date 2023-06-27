@@ -1,11 +1,13 @@
 package com.olesya.psyCab.registration.password;
 
+import com.olesya.psyCab.entity.PasswordResetToken;
+import com.olesya.psyCab.repository.PasswordResetTokenRepository;
 import com.olesya.psyCab.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.olesya.psyCab.user.User;
+import com.olesya.psyCab.entity.User;
 
 import java.util.*;
 
@@ -38,7 +40,13 @@ public class PasswordResetTokenServiceImpl implements PasswordResetTokenService 
     @Override
     public void saveResetTokenForUser(User theUser, String token){
         PasswordResetToken newToken = new PasswordResetToken(token, theUser);
+        Optional<PasswordResetToken> existUser = passwordResetTokenRepository.findByUser(theUser);
+        if (existUser.isPresent()){
+            deletePasswordResetTokenForUser(theUser);
+            passwordResetTokenRepository.save(newToken);
+        } else {
         passwordResetTokenRepository.save(newToken);
+        }
     }
 
     @Override
@@ -50,5 +58,12 @@ public class PasswordResetTokenServiceImpl implements PasswordResetTokenService 
     @Override
     public Optional<User> findUserByPasswordResetToken(String theToken){
         return Optional.ofNullable(passwordResetTokenRepository.findByToken(theToken).get().getUser());
+    }
+
+    @Override
+    public void deletePasswordResetTokenForUser(User theUser) {
+        Optional<PasswordResetToken> existUser = passwordResetTokenRepository.findByUser(theUser);
+        Long tokenId = existUser.get().getTokenId();
+        passwordResetTokenRepository.deleteById(tokenId);
     }
 }

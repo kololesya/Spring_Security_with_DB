@@ -1,6 +1,6 @@
 package com.olesya.psyCab.email;
 
-import com.olesya.psyCab.user.User;
+import com.olesya.psyCab.entity.User;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;

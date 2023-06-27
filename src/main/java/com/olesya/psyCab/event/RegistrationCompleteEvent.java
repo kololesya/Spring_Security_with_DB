@@ -1,6 +1,6 @@
 package com.olesya.psyCab.event;
 
-import com.olesya.psyCab.user.User;
+import com.olesya.psyCab.entity.User;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.context.ApplicationEvent;

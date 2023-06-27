@@ -1,18 +1,15 @@
 package com.olesya.psyCab.controller;
 
-import com.olesya.psyCab.email.SendEmailMessage;
 import com.olesya.psyCab.event.RegistrationCompleteEvent;
 import com.olesya.psyCab.registration.RegistrationRequest;
-import com.olesya.psyCab.registration.password.PasswordResetToken;
 import com.olesya.psyCab.registration.password.PasswordResetTokenService;
 import com.olesya.psyCab.repository.UserRepository;
 import com.olesya.psyCab.service.UserService;
 import com.olesya.psyCab.token.VerificationToken;
 import com.olesya.psyCab.token.VerificationTokenServiceImpl;
-import com.olesya.psyCab.user.User;
+import com.olesya.psyCab.entity.User;
 import com.olesya.psyCab.utility.UrlUtil;
 
-import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Valid;
@@ -25,7 +22,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Optional;
 
 @Controller

@@ -52,9 +52,31 @@
 </nav>
 
 <div class="container text-center my-5">
-  <h1>Welcome to your account</h1>
+  <h4>Welcome to your account</h4>
   <h6>Here will be information about your visits</h6>
 
+      <h2>All Specialists</h2>
+      <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Specialization</th>
+            <th scope="col">Date of visit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="specialist : ${specialists}">
+            <td th:text="${specialist.nameOfSpecialist}"></td>
+            <td th:text="${specialist.lastNameOfSpecialist}"></td>
+            <td th:text="${specialist.specialisation}"></td>
+            <td th:text="${specialist.dateOfVisit}"></td>
+            <td><a href="#" th:href="" class="btn btn-info">Reservation visit time</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
 
 <script

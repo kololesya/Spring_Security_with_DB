@@ -1,13 +1,12 @@
 package com.olesya.psyCab.controller;
 
 import com.olesya.psyCab.email.SendEmailMessage;
-import com.olesya.psyCab.registration.password.PasswordResetToken;
-import com.olesya.psyCab.registration.password.PasswordResetTokenRepository;
+import com.olesya.psyCab.repository.PasswordResetTokenRepository;
 import com.olesya.psyCab.registration.password.PasswordResetTokenService;
 import com.olesya.psyCab.repository.UserRepository;
 import com.olesya.psyCab.service.UserService;
 import com.olesya.psyCab.token.VerificationTokenServiceImpl;
-import com.olesya.psyCab.user.User;
+import com.olesya.psyCab.entity.User;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -56,44 +55,15 @@ public class PasswordController {
         String newToken = UUID.randomUUID().toString();
 
         if(userRepository.existsByEmail(email)) {
-            Set<PasswordResetToken> setTokens = new HashSet<>(passwordResetTokenService.getAllTokens()); //get list of tokens
-            Map<Long, String> map = new HashMap<>();
-            for (PasswordResetToken existsToken : setTokens) {
-                map.put(existsToken.getUser().getUserId(), existsToken.getToken());
+            passwordResetTokenService.saveResetTokenForUser(resetPassUser, newToken);
+
+            String url = "http://localhost:5678" + "/login/password-reset-form?token=" + newToken;
+            try {
+                emailMessage.sendPasswordResetVerificationEmail(resetPassUser, url);
+            } catch (MessagingException | UnsupportedEncodingException e) {
+                model.addAttribute("error", e.getMessage());
             }
-            System.out.println(map);
-            for (PasswordResetToken existsToken : setTokens){
-                if(map.containsKey(resetPassUser.getUserId())){
-                    map.replace(resetPassUser.getUserId(), existsToken.getToken(), newToken);
-                    passwordResetTokenRepository.save(existsToken);
-                } else {
-                    System.out.println("No");
-                }
-            }
-            System.out.println(map);
-//
-
-//              if (existsToken.getUser().getUserId() == resetPassUser.getUserId()){
-//                  System.out.println(existsToken.getToken());
-//                  existsToken.setToken(newToken);
-//                  System.out.println(existsToken.getToken());
-//                  passwordResetTokenRepository.save(existsToken);
-//                  System.out.println(existsToken.getToken());
-//                } else {
-//                  passwordResetTokenService.saveResetTokenForUser(resetPassUser, newToken);
-//                }
-//            }
-
-
-
-
-                String url = "http://localhost:5678" + "/login/password-reset-form?token=" + newToken;
-                try {
-                    emailMessage.sendPasswordResetVerificationEmail(resetPassUser, url);
-                } catch (MessagingException | UnsupportedEncodingException e) {
-                    model.addAttribute("error", e.getMessage());
-                }
-                return "redirect:/login/forgot-password-request/success?success";
+            return "redirect:/login/forgot-password-request/success?success";
 
         }
         return "redirect:/login/forgot-password-request?not_found";

@@ -1,13 +1,12 @@
-package com.olesya.psyCab.user;
+package com.olesya.psyCab.entity;
 
+import com.olesya.psyCab.email.ValidEmail;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.NaturalId;
 
 import java.util.Collection;
 
@@ -25,9 +24,8 @@ public class User {
     @Column(name="username", unique = true)
     private String username;
 
-  //  @NaturalId(mutable = true)
-    @Email(regexp = ".+[@].+[.].+")
-    //@Pattern(regexp="/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/")
+    @ValidEmail
+    @Size(min = 1, message = "{size.user.email}")
     private String email;
     private String password;
 

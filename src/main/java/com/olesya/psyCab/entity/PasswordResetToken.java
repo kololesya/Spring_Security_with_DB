@@ -1,9 +1,8 @@
-package com.olesya.psyCab.registration.password;
+package com.olesya.psyCab.entity;
 
 import java.util.Date;
 
 import com.olesya.psyCab.token.VerificationToken;
-import com.olesya.psyCab.user.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,11 +15,12 @@ import lombok.Setter;
 public class PasswordResetToken {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long tokenId;
     private String token;
     private Date expirationTime;
+
     @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(nullable = false, name = "user_id")
     private User user;
 
     public PasswordResetToken(String token, User user) {

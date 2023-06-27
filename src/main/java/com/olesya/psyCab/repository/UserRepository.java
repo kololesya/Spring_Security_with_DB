@@ -1,7 +1,8 @@
 package com.olesya.psyCab.repository;
 
-import com.olesya.psyCab.user.User;
+import com.olesya.psyCab.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;

@@ -1,6 +1,6 @@
 package com.olesya.psyCab.security;
 
-import com.olesya.psyCab.user.User;
+import com.olesya.psyCab.entity.User;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

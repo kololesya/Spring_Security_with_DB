@@ -1,6 +1,6 @@
 package com.olesya.psyCab.token;
 
-import com.olesya.psyCab.user.User;
+import com.olesya.psyCab.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

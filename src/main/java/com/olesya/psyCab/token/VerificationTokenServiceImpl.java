@@ -1,7 +1,7 @@
 package com.olesya.psyCab.token;
 
 import com.olesya.psyCab.repository.UserRepository;
-import com.olesya.psyCab.user.User;
+import com.olesya.psyCab.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
