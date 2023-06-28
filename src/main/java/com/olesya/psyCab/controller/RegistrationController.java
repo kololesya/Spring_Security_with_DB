@@ -1,8 +1,8 @@
 package com.olesya.psyCab.controller;
 
 import com.olesya.psyCab.event.RegistrationCompleteEvent;
-import com.olesya.psyCab.registration.RegistrationRequest;
-import com.olesya.psyCab.registration.password.PasswordResetTokenService;
+import com.olesya.psyCab.request.RegistrationRequest;
+import com.olesya.psyCab.request.password.PasswordResetTokenService;
 import com.olesya.psyCab.repository.UserRepository;
 import com.olesya.psyCab.service.UserService;
 import com.olesya.psyCab.token.VerificationToken;

@@ -1,6 +1,6 @@
 package com.olesya.psyCab.service;
 
-import com.olesya.psyCab.registration.RegistrationRequest;
+import com.olesya.psyCab.request.RegistrationRequest;
 import com.olesya.psyCab.repository.UserRepository;
 import com.olesya.psyCab.entity.Role;
 import com.olesya.psyCab.entity.User;

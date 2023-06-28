@@ -1,4 +1,4 @@
-package com.olesya.psyCab.registration.password;
+package com.olesya.psyCab.request.password;
 
 import com.olesya.psyCab.entity.PasswordResetToken;
 import com.olesya.psyCab.repository.PasswordResetTokenRepository;

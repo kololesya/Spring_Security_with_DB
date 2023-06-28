@@ -37,4 +37,9 @@ public class HomeController {
     public String loginPage(){
         return "login";
     }
+
+    @GetMapping("/reservation")
+    public String reservationPage(){
+        return "reservation";
+    }
 }

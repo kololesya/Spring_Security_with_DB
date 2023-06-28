@@ -26,11 +26,15 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link text-white" th:href="@{specialists}">Our Specialists</a>
+          <a class="nav-link text-white" th:href="@{/specialists}">Our Specialists</a>
         </li>
 
         <li class="nav-item" sec:authorize="isAuthenticated()">
-          <a class="nav-link text-white" th:href="@{myVisit}">My Visit</a>
+          <a class="nav-link text-white" th:href="@{/myVisit}">My Visit</a>
+        </li>
+
+        <li class="nav-item" sec:authorize="isAuthenticated()">
+          <a class="nav-link text-white" th:href="@{/reservation}">Reservation visit</a>
         </li>
       </ul>
       <div>
@@ -40,11 +44,11 @@
           </li>
 
           <li class="nav-item" sec:authorize="isAuthenticated()">
-            <a class="nav-link text-white" th:href="@{logout}">Logout</a>
+            <a class="nav-link text-white" th:href="@{/logout}">Logout</a>
           </li>
 
           <li class="nav-item" sec:authorize="!isAuthenticated()">
-            <a class="nav-link text-white" th:href="@{registration/registration-form}">New Patient Register</a>
+            <a class="nav-link text-white" th:href="@{/registration/registration-form}">New Patient Register</a>
           </li>
         </ul>
       </div>

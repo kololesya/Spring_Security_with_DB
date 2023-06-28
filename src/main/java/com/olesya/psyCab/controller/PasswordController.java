@@ -2,7 +2,7 @@ package com.olesya.psyCab.controller;
 
 import com.olesya.psyCab.email.SendEmailMessage;
 import com.olesya.psyCab.repository.PasswordResetTokenRepository;
-import com.olesya.psyCab.registration.password.PasswordResetTokenService;
+import com.olesya.psyCab.request.password.PasswordResetTokenService;
 import com.olesya.psyCab.repository.UserRepository;
 import com.olesya.psyCab.service.UserService;
 import com.olesya.psyCab.token.VerificationTokenServiceImpl;

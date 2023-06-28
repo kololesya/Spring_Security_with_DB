@@ -18,10 +18,8 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private Date filterDate;
-
     private String specialist;
 
-
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    private Date filterDate;
 }
