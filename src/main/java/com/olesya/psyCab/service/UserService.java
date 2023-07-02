@@ -11,4 +11,11 @@ public interface UserService {
     User registerUser(RegistrationRequest request);
 
     User findByEmail(String email);
+    Optional<User> findById(Long id);
+
+    void deleteUser(Long id);
+
+    //void updateUser(Long id, String firstName, String lastName, String email);
+
+
 }

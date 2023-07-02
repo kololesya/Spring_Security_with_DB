@@ -25,36 +25,7 @@ public class SpecialistController {
     @Autowired
     private SpecialistService specialistService;
 
-    @GetMapping("/registration-form")
-    public String showRegistrationForm(Model model){
-        model.addAttribute("specialist", new RegistrationSpecialistRequest());
-        return "registrationSpecialistForm";
-    }
-
-    @PostMapping("/registerSpecialist")
-    public String registerSpecialist(@ModelAttribute("specialist") @Valid RegistrationSpecialistRequest registration,
-                                     HttpServletRequest request, RegistrationSpecialistRequest regRequest) {
-//        Specialist spec = new Specialist(
-//                regRequest.getFirstName(),
-//                regRequest.getLastName(),
-//                regRequest.getSpecialization());
-//
-//        specialistRepository.save(spec);
 
 
-
-//        if (specialistRepository.(registration.getUsername())) {
-//            return "redirect:/registration/registration-form?invalidUsername";
-//        }
-//
-//        if (specialistRepository.existsByEmail(registration.getEmail())) {
-//            return "redirect:/registration/registration-form?invalidEmail";
-//        }
-
-        Specialist spec = specialistService.registerSpecialist(registration);
-        return "redirect:/specialists";
-
-
-    }
 
 }

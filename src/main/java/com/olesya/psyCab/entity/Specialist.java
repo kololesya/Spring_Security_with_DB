@@ -10,7 +10,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 
 @Entity
-@Table(name="specialist")
+@Table(name="specialists")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -29,9 +29,9 @@ public class Specialist {
     @Column(name = "specialization")
     private String specialization;
 
-//    @Column(name = "dateOfVisit")
-//    @DateTimeFormat(pattern = "dd-MM-yyyy")
-//    private Date dateOfVisit;
+    @Column(name = "dateOfVisit")
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    private Date dateOfVisit;
 
     public Specialist(String firstName, String lastName, String specialization){
         this.firstName = firstName;

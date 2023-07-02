@@ -1,3 +1,4 @@
+<!doctype html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
       xmlns:sec="http://www.thymeleaf.com/thymeleaf-extras-springsecurity6">
 <head>
@@ -25,11 +26,11 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link text-white" th:href="@{/specialists}">Our Specialists</a>
+          <a class="nav-link text-white" th:href="@{specialists}">Our Specialists</a>
         </li>
 
         <li class="nav-item" sec:authorize="hasRole('ROLE_USER')">
-          <a class="nav-link text-white" th:href="@{/myVisit}">My Visit</a>
+          <a class="nav-link text-white" th:href="@{myVisit}">My Visit</a>
         </li>
 
         <li class="nav-item" sec:authorize="hasRole('ROLE_USER')">
@@ -61,11 +62,11 @@
       <div>
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item" sec:authorize="!isAuthenticated()">
-            <a class="nav-link text-white" th:href="@{/login}">Login</a>
+            <a class="nav-link text-white" th:href="@{login}">Login</a>
           </li>
 
           <li class="nav-item" sec:authorize="isAuthenticated()">
-            <a class="nav-link text-white" th:href="@{/logout}">Logout</a>
+            <a class="nav-link text-white" th:href="@{logout}">Logout</a>
           </li>
 
           <li class="nav-item" sec:authorize="!isAuthenticated()">
@@ -80,67 +81,30 @@
 <div class="container my-5 p-5" style="border:1px solid black">
 
   <div class="row mt-2" sec:authorize="!hasAnyAuthority('ROLE_ADMIN')">
-    <h4 class="text-center" sec:authorize="hasAnyAuthority('ROLE_USER')">
-      You have no access to this page. Please <a th:href="@{/logout}">log out</a> and then log in as an admin</h4>
-    <h4 class="text-center" sec:authorize="!isAuthenticated()">
-      You are not log in. Please log in to your personal account</h4>
+      <h4 class="text-center" sec:authorize="hasAnyAuthority('ROLE_USER')">
+        You have no access to this page. Please <a th:href="@{/logout}">log out</a> and then log in as an admin</h4>
+      <h4 class="text-center" sec:authorize="!isAuthenticated()">
+        You are not log in. Please log in to your personal account</h4>
 
-    <div class="container my-3 p-3" sec:authorize="!isAuthenticated()">
-      <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
-        <li class="nav-item" role="presentation">
-          <a class="nav-link active" id="tab-login" data-mdb-toggle="pill" href="/login" role="tab"
-             aria-controls="pills-login" aria-selected="true">Login</a>
-        </li>
-        <li class="nav-item" role="presentation">
-          <a class="nav-link" id="tab-register" data-mdb-toggle="pill" href="/registration/registration-form" role="tab"
-             aria-controls="pills-register" aria-selected="false">Register</a>
-        </li>
-      </ul>
+      <div class="container my-3 p-3" sec:authorize="!isAuthenticated()">
+        <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
+          <li class="nav-item" role="presentation">
+            <a class="nav-link active" id="tab-login" data-mdb-toggle="pill" href="/login" role="tab"
+               aria-controls="pills-login" aria-selected="true">Login</a>
+          </li>
+          <li class="nav-item" role="presentation">
+            <a class="nav-link" id="tab-register" data-mdb-toggle="pill" href="/registration/registration-form" role="tab"
+               aria-controls="pills-register" aria-selected="false">Register</a>
+          </li>
+        </ul>
+      </div>
     </div>
-  </div>
 
   <div class="row mt-2" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
-
-    <div th:if="${param.invalidSpecialist}" class="text-center">
-      <p class="alert alert-danger">This specialist already exists</p>
-    </div>
-
     <h4 class="text-center">Stuff of CAMMBIO</h4>
-
-    <form th:action="@{/admin/all-specialists/registerSpecialist}" method="post" th:object="${specialists}" class="col-md-4 offset-md-4">
-  <div class="mb-3 row">
-    <label for="firstName" class="col-sm-6 col-form-label">First name of Specialist</label>
-    <div class="col-sm-6">
-      <input type="text" id="firstName" autofocus="autofocus"
-             class="form-control" required name = "firstName"
-             th:value="${specialists.firstName}">
-    </div>
   </div>
 
-  <div class="mb-3 row">
-    <label for="lastName" class="col-sm-6 col-form-label">Last name of specialist</label>
-    <div class="col-sm-6">
-      <input type="text" id="lastName" autofocus="autofocus"
-             class="form-control" required name = "lastName"
-             th:value="${specialists.lastName}">
-    </div>
-  </div>
-
-  <div class="mb-3 row">
-    <label for="specialization" class="col-sm-6 col-form-label">Specialization</label>
-    <div class="col-sm-6">
-      <input type="text" id="specialization" autofocus="autofocus"
-             class="form-control" required name = "specialization"
-             th:value="${specialists.specialization}">
-    </div>
-  </div>
-
-  <div>
-    <button type="submit" class="btn btn-success">Register</button>
-  </div>
-</form>
-
-  </div>
 </div>
+
 </body>
 </html>

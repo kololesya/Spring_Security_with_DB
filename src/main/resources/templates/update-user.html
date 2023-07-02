@@ -31,7 +31,7 @@
 
                 <li class="nav-item">
                     <a class="nav-link text-white" sec:authorize="isAuthenticated()"
-                    th:href="@{/myVisit}">My Visit</a>
+                       th:href="@{/myVisit}">My Visit</a>
                 </li>
 
                 <li class="nav-item" sec:authorize="isAuthenticated()">
@@ -71,18 +71,60 @@
 
 <div class="container text-center my-5">
 
-    <h1>Welcome to our Psychological Cabinet</h1>
-    <h6>Lorem ipsum dolor sit amet .
-        The graphic and typographic operators know this well, in reality all the professions
-        dealing with the universe of communication have a stable relationship with these words,
-        but what is it? Lorem ipsum is a dummy text without any sense. It is a sequence of Latin
-        words that, as they are positioned, do not form sentences with a complete sense, but give
-        life to a test text useful to fill spaces that will subsequently be occupied from ad hoc
-        texts composed by communication professionals. It is certainly the most famous placeholder
-        text even if there are different versions distinguishable from the order in which the
-        Latin words are repeated.
-    </h6>
+    <h4>Update information about the user</h4>
+    <form th:action="@{/admin/all-users/update/{id}(id=${user.userId})}"
+          method="post" th:object="${user}" class="col-md-4 offset-md-4">
+        <input type="hidden" th:field="*{id}">
+        <div class="mb-3 row">
+            <label for="username" class="col-sm-5 col-form-label">Create new username</label>
+            <div class="col-sm-6">
+                <input type="text" id="username" autofocus="autofocus"
+                       class="form-control" required name = "username"
+                       th:field="*{username}" placeholder="Username">
+                <span id="usernameError" class="alert alert-danger col-sm-4" style="display:none"></span>
+            </div>
+        </div>
 
+        <div class="mb-3 row">
+            <label for="email" class="col-sm-5 col-form-label">Change your email</label>
+            <div class="col-sm-6">
+                <input type="email" id="email" autofocus="autofocus"
+                       class="form-control" required name = "email" value="email@example.com"
+                       th:field="*{email}" placeholder="Email">
+                <span id="emailError" class="alert alert-danger col-sm-4" style="display:none"></span>
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="inputPassword" class="col-sm-5 col-form-label">Password</label>
+            <div class="col-sm-6">
+                <input type="password" id="inputPassword" autofocus="autofocus"
+                       class="form-control" required name = "password"
+                       th:value="${user.password}">
+                <span id="passwordError" class="alert alert-danger col-sm-4" style="display:none"></span>
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="confirm" class="col-sm-5 col-form-label">Confirm Password</label>
+            <div class="col-sm-6">
+                <input type="password" id="confirm" name = "confirm" class="form-control"
+                       autofocus="autofocus" required placeholder="confirm new password"
+                       oninput="checkConfirmPassword(this)">
+                <span id="globalError" class="alert alert-danger col-sm-4" style="display:none"></span>
+            </div>
+        </div>
+
+        <div>
+            <button type="submit" class="btn btn-success">Update information</button>
+        </div>
+
+        <div>
+            <span>Do not want to change data?
+                <a th:href="@{/admin/all-users}" class="btn btn-info">Don't save</a>
+            </span>
+        </div>
+    </form>
 
 </div>
 

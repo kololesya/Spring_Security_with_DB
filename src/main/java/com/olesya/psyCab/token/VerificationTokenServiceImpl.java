@@ -40,4 +40,9 @@ public class VerificationTokenServiceImpl implements VerificationTokenService{
 
         return tokenRepository.findByToken(token);
     }
+
+    @Override
+    public void deleteUserToken(Long userId) {
+        tokenRepository.deleteByUserUserId(userId);
+    }
 }

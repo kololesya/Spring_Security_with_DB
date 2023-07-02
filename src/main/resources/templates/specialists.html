@@ -60,32 +60,6 @@
     <h4 class="text-center">All our specialist</h4>
   </div>
 
-  <table class="table table-bordered table-hover">
-    <thead>
-    <tr>
-      <th scope="col">First Name</th>
-      <th scope="col">Last Name</th>
-      <th scope="col">Specialization</th>
-      <th scope="col">Date of visit</th>
-    </tr>
-
-
-    </thead>
-    <tbody>
-    <tr th:each="specialist : ${specialists}">
-      <td th:text="${specialist.nameOfSpecialist}"></td>
-      <td th:text="${specialist.lastNameOfSpecialist}"></td>
-      <td th:text="${specialist.specialisation}"></td>
-      <td th:text="${specialist.dateOfVisit}"></td>
-      <td><a href="#" th:href="" class="btn btn-info">Reservation visit time</a></td>
-    </tr>
-    </tbody>
-  </table>
-
-  <a href="/specialists/registration-form" class="btn btn-primary center" role="button"
-     data-bs-toggle="button" aria-pressed="true">Register new specialist</a>
-
 </div>
-
 </body>
 </html>

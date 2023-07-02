@@ -1,7 +1,5 @@
-<!doctype html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
       xmlns:sec="http://www.thymeleaf.com/thymeleaf-extras-springsecurity6">
-<link rel="icon" href="favicon.ico.png" type="image/x-icon">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,12 +8,13 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
             crossorigin="anonymous"></script>
-    <title>Home Page</title>
+    <title>Admin panel</title>
 </head>
 <body>
+
 <nav class="navbar navbar-expand-lg navbar-light bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand text-white" th:href="@{/}">CAMMBIO</a>
+        <a class="navbar-brand text-white" th:href="@{/}">Cambio</a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -29,17 +28,26 @@
                     <a class="nav-link text-white" th:href="@{/specialists}">Our Specialists</a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link text-white" sec:authorize="isAuthenticated()"
-                    th:href="@{/myVisit}">My Visit</a>
+                <li class="nav-item" sec:authorize="hasRole('ROLE_USER')">
+                    <a class="nav-link text-white" th:href="@{/myVisit}">My Visit</a>
+                </li>
+
+                <li class="nav-item" sec:authorize="hasRole('ROLE_USER')">
+                    <a class="nav-link text-white" th:href="@{/reservation}">Reservation visit</a>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <a class="nav-link text-white" th:href="@{/admin/all-specialists}">All Specialists</a>
                 </li>
 
                 <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <a class="nav-link text-white" th:href="@{/reservation}">Reservation visit</a>
+                    <a class="nav-link text-white" th:href="@{/admin/all-users}">All Users</a>
                 </li>
 
-                <li class="nav-item" sec:authorize="isAuthenticated()" th:if="${#authorization.expression('hasAuthority(''ROLE_ADMIN'')')}">
-                    <a class="nav-link text-white" th:href="@{/admin}">Admin</a>
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <a class="nav-link text-white" th:href="@{/admin/all-reservation}">All Reservation</a>
                 </li>
             </ul>
 
@@ -53,11 +61,11 @@
             <div>
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item" sec:authorize="!isAuthenticated()">
-                        <a class="nav-link text-white" th:href="@{login}">Login</a>
+                        <a class="nav-link text-white" th:href="@{/login}">Login</a>
                     </li>
 
                     <li class="nav-item" sec:authorize="isAuthenticated()">
-                        <a class="nav-link text-white" th:href="@{logout}">Logout</a>
+                        <a class="nav-link text-white" th:href="@{/logout}">Logout</a>
                     </li>
 
                     <li class="nav-item" sec:authorize="!isAuthenticated()">
@@ -69,29 +77,33 @@
     </div>
 </nav>
 
-<div class="container text-center my-5">
+<div class="container my-5 p-5" style="border:1px solid black">
 
-    <h1>Welcome to our Psychological Cabinet</h1>
-    <h6>Lorem ipsum dolor sit amet .
-        The graphic and typographic operators know this well, in reality all the professions
-        dealing with the universe of communication have a stable relationship with these words,
-        but what is it? Lorem ipsum is a dummy text without any sense. It is a sequence of Latin
-        words that, as they are positioned, do not form sentences with a complete sense, but give
-        life to a test text useful to fill spaces that will subsequently be occupied from ad hoc
-        texts composed by communication professionals. It is certainly the most famous placeholder
-        text even if there are different versions distinguishable from the order in which the
-        Latin words are repeated.
-    </h6>
+    <div class="row mt-2" sec:authorize="!hasAnyAuthority('ROLE_ADMIN')">
+        <h4 class="text-center" sec:authorize="hasAnyAuthority('ROLE_USER')">
+            You have no access to this page. Please <a th:href="@{/logout}">log out</a> and then log in as an admin</h4>
+        <h4 class="text-center" sec:authorize="!isAuthenticated()">
+            You are not log in. Please log in to your personal account</h4>
 
+        <div class="container my-3 p-3" sec:authorize="!isAuthenticated()">
+            <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link active" id="tab-login" data-mdb-toggle="pill" href="/login" role="tab"
+                       aria-controls="pills-login" aria-selected="true">Login</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="tab-register" data-mdb-toggle="pill" href="/registration/registration-form" role="tab"
+                       aria-controls="pills-register" aria-selected="false">Register</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row mt-2" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
+        <h4 class="text-center">Stuff of CAMMBIO</h4>
+    </div>
 
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
-        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"
-        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
-        crossorigin="anonymous"></script>
 
 </body>
 </html>

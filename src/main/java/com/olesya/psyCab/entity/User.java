@@ -15,7 +15,7 @@ import java.util.Collection;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(uniqueConstraints={@UniqueConstraint(columnNames={"username"})})
+@Table(name = "user", uniqueConstraints={@UniqueConstraint(columnNames={"username"})})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +32,7 @@ public class User {
     @Column(name = "enabled")
     private boolean isEnabled;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "userId"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "roleId"))
@@ -44,6 +44,13 @@ public class User {
         this.password = password;
         this.isEnabled = false;
         this.roles = roles;
+    }
+
+    public User(String username, String email, String password, boolean isEnabled) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.isEnabled = false;
     }
 
     @Override

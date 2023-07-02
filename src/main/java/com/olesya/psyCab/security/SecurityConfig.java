@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -18,9 +19,9 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final ProjectUserDetailsService userDetailsService;
+    private final UserDetailsServiceImpl userDetailsService;
 
-    public SecurityConfig(ProjectUserDetailsService userDetailsService) {
+    public SecurityConfig(UserDetailsServiceImpl userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 
@@ -44,11 +45,17 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeRequests((authorizeRequests) ->
                         authorizeRequests
+                                .requestMatchers("/admin/all-users/**",
+                                        "/admin/all-specialists/**",
+                                        "/admin/all-reservations")
+                                .hasRole("ADMIN")
                                 .requestMatchers("/",
                                         "/registration/**",
                                         "/login/**",
                                         "/specialists",
-                                        "/error")
+                                        "/error",
+                                        "/myVisit/**",
+                                        "/admin/**")
                                 .permitAll()
                                 .anyRequest()
                                 .authenticated()
@@ -60,6 +67,7 @@ public class SecurityConfig {
                                 .defaultSuccessUrl("/")
                                 .permitAll()
                 )
+                .logout((logout) -> logout.logoutUrl("/"))
                 .exceptionHandling(e -> e
                         .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
                 )

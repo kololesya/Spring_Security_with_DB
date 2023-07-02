@@ -100,47 +100,41 @@
   </div>
 
   <div class="row mt-2" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
+    <h4 class="text-center mt-2">Stuff of CAMMBIO</h4>
+    <div class="row mt-3 my-3" th:switch="${specialists}">
+      <h2 th:case="null">There are no stuff to display</h2>
+      <div th:case="*">
+        <table class="table table--bordered table-hover">
+          <thead>
+          <tr>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Specialization</th>
+            <th scope="col">Timetable</th>
+            <th colspan="2">Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="specialist : ${specialists}">
+            <td th:text="${specialist.firstName}"></td>
+            <td th:text="${specialist.lastName}"></td>
+            <td th:text="${specialist.specialization}"></td>
+            <td th:text="${specialist.specialization}"></td>
+            <td> <a href="#">Edit</a></td>
+            <td> <a href="#">Delete</a></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
 
-    <div th:if="${param.invalidSpecialist}" class="text-center">
-      <p class="alert alert-danger">This specialist already exists</p>
     </div>
 
-    <h4 class="text-center">Stuff of CAMMBIO</h4>
-
-    <form th:action="@{/admin/all-specialists/registerSpecialist}" method="post" th:object="${specialists}" class="col-md-4 offset-md-4">
-  <div class="mb-3 row">
-    <label for="firstName" class="col-sm-6 col-form-label">First name of Specialist</label>
-    <div class="col-sm-6">
-      <input type="text" id="firstName" autofocus="autofocus"
-             class="form-control" required name = "firstName"
-             th:value="${specialists.firstName}">
+    <div class="row mt-2">
+      <a th:href="@{/admin/all-specialists/registration-form}" class="btn btn-primary pull-right" role="button"
+         data-bs-toggle="button" aria-pressed="true">Register new specialist</a>
     </div>
-  </div>
-
-  <div class="mb-3 row">
-    <label for="lastName" class="col-sm-6 col-form-label">Last name of specialist</label>
-    <div class="col-sm-6">
-      <input type="text" id="lastName" autofocus="autofocus"
-             class="form-control" required name = "lastName"
-             th:value="${specialists.lastName}">
-    </div>
-  </div>
-
-  <div class="mb-3 row">
-    <label for="specialization" class="col-sm-6 col-form-label">Specialization</label>
-    <div class="col-sm-6">
-      <input type="text" id="specialization" autofocus="autofocus"
-             class="form-control" required name = "specialization"
-             th:value="${specialists.specialization}">
-    </div>
-  </div>
-
-  <div>
-    <button type="submit" class="btn btn-success">Register</button>
-  </div>
-</form>
-
   </div>
 </div>
+
 </body>
 </html>

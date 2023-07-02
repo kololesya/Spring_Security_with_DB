@@ -63,12 +63,32 @@
 </nav>
 
 <div class="container my-5 p-5" style="border:1px solid black">
-  <div class="row mt-2">
-    <h4 class="text-center">Reserve your visit</h4>
-  </div>
+    <div th:switch="${specialists}">
+      <h4 th:case="null">There are no specialists to display</h4>
+      <div th:case="*">
+        <h4 class="text-center">Reserve your visit</h4>
 
-
-
+        <table class="table table-bordered table-hover">
+          <thead>
+          <tr>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Specialization</th>
+            <th colspan="2">Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="specialist : ${specialists}">
+            <td th:text="${specialist.firstName}"></td>
+            <td th:text="${specialist.lastName}"></td>
+            <td th:text="${specialist.specialization}"></td>
+            <td><a href="#" class="btn btn-info">Reservation date and time</a></td>
+            <!--          <td><a th:href="@{/users/delete/{id}(id=${user.id})}" class="btn btn-danger">Delete</a></td>-->
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
 </div>
 
 </body>

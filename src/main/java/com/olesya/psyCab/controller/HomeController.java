@@ -38,8 +38,9 @@ public class HomeController {
         return "login";
     }
 
-    @GetMapping("/reservation")
-    public String reservationPage(){
-        return "reservation";
+    @GetMapping("/admin")
+    public String adminPage(){
+        return "admin";
+
     }
 }

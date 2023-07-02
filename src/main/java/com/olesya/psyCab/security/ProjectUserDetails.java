@@ -1,5 +1,6 @@
 package com.olesya.psyCab.security;
 
+import com.olesya.psyCab.entity.Role;
 import com.olesya.psyCab.entity.User;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
@@ -8,41 +9,36 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.*;
 import java.util.Collection;
-import java.util.stream.Collectors;
 
 @Data
 public class ProjectUserDetails implements UserDetails {
 
-    private String username;
-    private String password;
-    private boolean isEnabled;
-    private List<GrantedAuthority> authorities;
+    private User user;
 
     public ProjectUserDetails(User user) {
-        this.username = user.getUsername();
-        this.password = user.getPassword();
-        this.isEnabled = user.isEnabled();
-        this.authorities = Arrays.stream(
-                user.getRoles()
-                        .toString()
-                        .split(","))
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
+        this.user = user;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        Collection<Role> roles = user.getRoles();
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+
+        for (Role role : roles) {
+            authorities.add(new SimpleGrantedAuthority(role.getNameRole()));
+        }
+
         return authorities;
     }
 
     @Override
     public String getPassword() {
-        return password;
+        return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return username;
+        return user.getUsername();
     }
 
     @Override
@@ -62,6 +58,6 @@ public class ProjectUserDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return isEnabled;
+        return user.isEnabled();
     }
 }
