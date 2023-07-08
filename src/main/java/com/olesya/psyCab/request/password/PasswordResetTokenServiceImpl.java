@@ -40,7 +40,7 @@ public class PasswordResetTokenServiceImpl implements PasswordResetTokenService 
     @Override
     public void saveResetTokenForUser(User theUser, String token){
         PasswordResetToken newToken = new PasswordResetToken(token, theUser);
-        Optional<PasswordResetToken> existUser = passwordResetTokenRepository.findByUser(theUser);
+        Optional<PasswordResetToken> existUser = findTokenByPasswordResetToken(theUser);
         if (existUser.isPresent()){
             deletePasswordResetTokenForUser(theUser);
             passwordResetTokenRepository.save(newToken);
@@ -62,8 +62,13 @@ public class PasswordResetTokenServiceImpl implements PasswordResetTokenService 
 
     @Override
     public void deletePasswordResetTokenForUser(User theUser) {
-        Optional<PasswordResetToken> existUser = passwordResetTokenRepository.findByUser(theUser);
+        Optional<PasswordResetToken> existUser = findTokenByPasswordResetToken(theUser);
         Long tokenId = existUser.get().getTokenId();
         passwordResetTokenRepository.deleteById(tokenId);
+    }
+
+    private Optional<PasswordResetToken> findTokenByPasswordResetToken(User theUser){
+        Optional<PasswordResetToken> existUser = passwordResetTokenRepository.findByUser(theUser);
+        return existUser;
     }
 }

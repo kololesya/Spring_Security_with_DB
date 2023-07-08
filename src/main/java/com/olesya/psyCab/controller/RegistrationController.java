@@ -37,7 +37,6 @@ public class RegistrationController {
     @Autowired
     private final UserRepository userRepository;
 
-    private final PasswordResetTokenService passwordResetTokenService;
     @GetMapping("/registration-form")
     public String showRegistrationForm(Model model){
         model.addAttribute("user", new RegistrationRequest());

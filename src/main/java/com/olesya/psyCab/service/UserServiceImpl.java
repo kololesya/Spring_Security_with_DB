@@ -14,9 +14,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -42,9 +42,9 @@ public class UserServiceImpl implements UserService{
 
         if (isRoleRepoEmpty()){
             roleRepository.saveAll(List.of(roleUser, roleAdmin));
-        } else if (isRoleExist(roleUser)){
+        } else if (isRoleExist("ROLE_USER")){
             roleRepository.save(roleUser);
-        } else {
+        } else if (isRoleExist("ROLE_ADMIN")) {
             roleRepository.save(roleAdmin);
         }
 
@@ -55,9 +55,9 @@ public class UserServiceImpl implements UserService{
                 request.isEnable());
 
         if (request.getUsername().contains("admin")){
-            user.setRoles(Arrays.asList(roleRepository.findByNameRole("ROLE_ADMIN")));
+            user.setRoles((Set<Role>) roleRepository.findByNameRole("ROLE_ADMIN"));
         } else {
-            user.setRoles(Arrays.asList(roleRepository.findByNameRole("ROLE_USER")));
+            user.setRoles((Set<Role>) roleRepository.findByNameRole("ROLE_USER"));
         }
 
         userRepository.save(user);
@@ -74,26 +74,66 @@ public class UserServiceImpl implements UserService{
     public Optional<User> findById(Long id) {
         return userRepository.findById(id);
     }
+
     @Transactional
     @Override
     public void deleteUser(Long id) {
-        Optional<User> theUser = findById(id);
-        theUser.ifPresent(user -> verificationTokenService.deleteUserToken(user.getUserId()));
+        deleteVerificationToken(id);
+//        Optional<User> theUser = findById(id);
+//        theUser.ifPresent(user -> verificationTokenService.deleteUserToken(user.getUserId()));
         userRepository.deleteById(id);
     }
 
-//    @Transactional
-//    @Override
-//    public void updateUser(Long id, String firstName, String lastName, String email) {
-//        userRepository.update(firstName, lastName, email, id);
-//    }
+    private void deleteVerificationToken(Long id){
+        findById(id).ifPresent(user -> verificationTokenService.deleteUserToken(user.getUserId()));
+    }
+
+    @Override
+    public void changeEmail(User user, String email){
+        user.setEmail(email);
+        userRepository.save(user);
+    }
+
+    @Override
+    public void changeUsername(User user, String username) {
+        user.setUsername(username);
+        userRepository.save(user);
+    }
+
+    @Override
+    public void changeFirstName(User user, String firstName) {
+        user.setFirstName(firstName);
+        userRepository.save(user);
+    }
+
+    @Override
+    public void changeLastName(User user, String lastName) {
+        user.setLastName(lastName);
+        userRepository.save(user);
+    }
+
+    @Override
+    public void changePhoneNumber(User user, Long phoneNumber){
+        user.setPhoneNumber(phoneNumber);
+        userRepository.save(user);
+    }
+
+    @Override
+    public boolean checkIfValidOldPassword(final User user, final String oldPassword) {
+        return passwordEncoder.matches(oldPassword, user.getPassword());
+    }
+
+    @Override
+    public void changeUserPassword(User user, String password) {
+        user.setPassword(passwordEncoder.encode(password));
+        userRepository.save(user);
+    }
 
     private boolean isRoleRepoEmpty(){
-
         return roleRepository.findAll().isEmpty();
     }
 
-    private boolean isRoleExist(Role role){
-        return roleRepository.findByNameRole(String.valueOf(role)) == null;
+    private boolean isRoleExist(String role){
+        return roleRepository.findByNameRole(role) == null;
     }
 }

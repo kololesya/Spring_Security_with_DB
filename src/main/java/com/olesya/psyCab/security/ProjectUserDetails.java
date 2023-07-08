@@ -41,6 +41,25 @@ public class ProjectUserDetails implements UserDetails {
         return user.getUsername();
     }
 
+    public String getUserEmail() {
+        return user.getEmail();
+    }
+    public Long getUserId() {
+        return this.user.getUserId();
+    }
+
+    public String getUserFirstName() {
+        return this.user.getFirstName();
+    }
+
+    public String getUserLastName() {
+        return this.user.getLastName();
+    }
+
+    public Long getUserPhoneNumber() {
+        return this.user.getPhoneNumber();
+    }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;

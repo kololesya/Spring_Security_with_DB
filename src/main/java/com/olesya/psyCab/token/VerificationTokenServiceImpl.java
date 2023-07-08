@@ -1,5 +1,6 @@
 package com.olesya.psyCab.token;
 
+import com.olesya.psyCab.entity.PasswordResetToken;
 import com.olesya.psyCab.repository.UserRepository;
 import com.olesya.psyCab.entity.User;
 import lombok.RequiredArgsConstructor;
@@ -7,12 +8,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class VerificationTokenServiceImpl implements VerificationTokenService{
     private final VerificationTokenRepository tokenRepository;
     private final UserRepository userRepository;
+
     @Override
     public String validateToken(String token) {
         Optional<VerificationToken> theToken = tokenRepository.findByToken(token);
@@ -36,8 +39,21 @@ public class VerificationTokenServiceImpl implements VerificationTokenService{
     }
 
     @Override
-    public Optional<VerificationToken> findByToken(String token) {
+    public void saveNewVerificationTokenForUser(User user, String token){
+        String vToken = UUID.randomUUID().toString();
+        VerificationToken newToken = new VerificationToken(token, user);
+        Optional<VerificationToken> existUser = tokenRepository.findByUser(user);
 
+        if (existUser.isPresent()){
+            deleteUserToken(user.getUserId());
+            tokenRepository.save(newToken);
+        } else {
+            tokenRepository.save(newToken);
+        }
+    }
+
+    @Override
+    public Optional<VerificationToken> findByToken(String token) {
         return tokenRepository.findByToken(token);
     }
 

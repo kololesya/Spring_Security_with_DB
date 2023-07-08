@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -32,13 +32,23 @@ public class User {
     @Column(name = "enabled")
     private boolean isEnabled;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @Column(name="name")
+    private String firstName;
+
+    @Column(name="surname")
+    private String lastName;
+
+    @Column(name="phone")
+    private Long phoneNumber;
+
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "userId"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "roleId"))
-    private Collection<Role> roles;
+    private Set<Role> roles;
 
-    public User(String username, String email, String password, boolean isEnabled, Collection<Role> roles) {
+    public User(String username, String email, String password, boolean isEnabled, Set<Role> roles) {
         this.username = username;
         this.email = email;
         this.password = password;
